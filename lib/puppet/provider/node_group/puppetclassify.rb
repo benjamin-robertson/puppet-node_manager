@@ -6,7 +6,7 @@ Puppet::Type.type(:node_group).provide(:puppetclassify) do
     # Loading in runtime so Ruby code is processed after puppetclassify
     # libs are available.  Using the defined? method to ensure load only
     # happens once per run, not once per resource.
-    load './lib/puppet/util/node_groups.rb' unless defined?(Puppet::Util::Node_groups)
+    load File.expand_path('../../../util/node_groups.rb', __FILE__) unless defined?(Puppet::Util::Node_groups)
 
     super(value)
     @property_flush = {
