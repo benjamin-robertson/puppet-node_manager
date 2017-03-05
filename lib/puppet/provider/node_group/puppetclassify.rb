@@ -1,9 +1,13 @@
-require 'puppet/util/node_groups'
-
 Puppet::Type.type(:node_group).provide(:puppetclassify) do
   confine :feature => :puppetclassify
 
   def initialize(value={})
+    # https://github.com/puppetlabs/prosvcs-node_manager/issues/51
+    # Loading in runtime so Ruby code is processed after puppetclassify
+    # libs are available.  Using the defined? method to ensure load only
+    # happens once per run, not once per resource.
+    load './lib/puppet/util/node_groups.rb' unless defined?(Puppet::Util::Node_groups)
+
     super(value)
     @property_flush = {
       'state' => {},

@@ -3,15 +3,10 @@
 # seamless loading by the masteror during compilation prior to enforcing state,
 # allow graceful failure when unable to load puppetclassify.
 
-begin
-  require 'yaml'
-  require 'puppetclassify'
-  parent = PuppetClassify
-rescue LoadError => e
-  parent = Object
-end
+require 'yaml'
+require 'puppetclassify'
 
-class Puppet::Util::Node_groups < parent
+class Puppet::Util::Node_groups < PuppetClassify
 
   def initialize
     auth_info = {
