@@ -45,10 +45,13 @@ Puppet::Type.newtype(:node_group) do
         super
       else
         a = @resource.property(:rule).retrieve || {}
-        b = shouldorig.first
+        b = shouldorig
         puts a
         puts b
-        #merged = a + b.drop(1)
+        merged = a + b.drop(1)
+        puts "merged is"
+        puts merged
+        merged
       end
     end
   end
