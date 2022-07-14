@@ -46,7 +46,7 @@ Puppet::Type.newtype(:node_group) do
       else
         a = shouldorig
         b = @resource.property(:rule).retrieve || {}
-        if defined(b)
+        if defined?(b)
           puts a
           puts b
           merged = (a + b.drop(1)).uniq
