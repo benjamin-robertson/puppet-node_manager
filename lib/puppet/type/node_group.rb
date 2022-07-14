@@ -36,9 +36,9 @@ Puppet::Type.newtype(:node_group) do
   newproperty(:rule, :array_matching => :all) do
     desc 'Match conditions for this group'
     defaultto []
-    validate do |value|
-      fail("Rules must be specified as an array") unless value.is_a?(Array)
-    end
+    # validate do |value|
+    #   fail("Rules must be specified as an array") unless value.is_a?(Array)
+    # end
     def should
       case @resource[:purge_behavior]
       when :rule, :all
