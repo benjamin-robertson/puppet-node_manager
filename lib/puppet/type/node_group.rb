@@ -48,7 +48,7 @@ Puppet::Type.newtype(:node_group) do
         b = shouldorig
         puts a
         puts b
-        merged = a + b.drop(1)
+        merged = (a + b.drop(1)).uniq
         puts "merged is"
         puts merged
         merged
