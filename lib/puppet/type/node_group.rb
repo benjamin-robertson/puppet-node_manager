@@ -33,7 +33,7 @@ Puppet::Type.newtype(:node_group) do
       fail("Variables must be supplied as a hash") unless value.is_a?(Hash)
     end
   end
-  newproperty(:rule, :array_matching => :first) do
+  newproperty(:rule, :array_matching => :all) do
     desc 'Match conditions for this group'
     defaultto []
     def should
@@ -77,6 +77,9 @@ Puppet::Type.newtype(:node_group) do
           a
         end
       end
+    end
+    def insync?(is)
+      sort(is) == should
     end
   end
   newproperty(:environment) do
