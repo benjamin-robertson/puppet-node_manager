@@ -43,32 +43,25 @@ Puppet::Type.newtype(:node_group) do
       else
         a = shouldorig
         b = @resource.property(:rule).retrieve || {}
-        puts "b length is #{b.length}"
-        puts "b type is #{b.class}"
+        # check if the node classifer has any rules defined before attempting merge
         if b.length >= 2
-          puts "This is a"
-          puts a
-          puts "This is b"
-          puts b
           if b[0] == "or" and b[1][0] == "or" or b[1][0] == "and"
-            puts "We are doing both rules and pinned nodes"
+            # We are merging both rules and pinned nodes
             rules = (b[1] + a[1].drop(1)).uniq
             pinned = (a[2,a.length] + b[2,b.length]).uniq
             b[1] = rules
             merged = (b + pinned).uniq
           elsif a[0] == "or" and a[1][0] == "or" or a[1][0] == "and"
-            puts "We are doing both rules and pinned nodes"
+            # We are merging both rules and pinned nodes
             rules = a[1] # no rules to merge on B side
             pinned = (a[2,a.length] + b[2,b.length]).uniq
             merged = (a + pinned).uniq
           else
-            puts "We are only doing rules OR pinned nodes"
+            # We are only doing rules OR pinned nodes
             merged = (a + b.drop(1)).uniq
           end
-          puts "merged is"
-          puts merged
           if merged == b
-            puts "values are the same, returning orginal value"
+            # values are the same, returning orginal value"
             b
           else
             merged
