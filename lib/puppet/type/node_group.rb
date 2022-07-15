@@ -79,7 +79,7 @@ Puppet::Type.newtype(:node_group) do
       end
     end
     def insync?(is)
-      sort(is) == should
+      is == should
     end
   end
   newproperty(:environment) do
