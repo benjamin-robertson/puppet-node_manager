@@ -37,6 +37,7 @@ Puppet::Type.newtype(:node_group) do
     desc 'Match conditions for this group'
     defaultto []
     validate do |value|
+      puts value
       puts value.class
       fail("Rules must be specified as an array") unless value.is_a?(Array)
     end
