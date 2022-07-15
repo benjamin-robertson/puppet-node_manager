@@ -48,7 +48,7 @@ Puppet::Type.newtype(:node_group) do
         b = @resource.property(:rule).retrieve || {}
         puts "b length is #{b.length}"
         puts "b type is #{b.class}"
-        if defined?(b)
+        if b.length <= 1
           puts "This is a"
           puts a
           puts "This is b"
