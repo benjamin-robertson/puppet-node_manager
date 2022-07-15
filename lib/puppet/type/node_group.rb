@@ -43,7 +43,7 @@ Puppet::Type.newtype(:node_group) do
       else
         a = shouldorig
         b = @resource.property(:rule).retrieve || {}
-        # check if the node classifer has any rules defined before attempting merge
+        # check if the node classifer has any rules defined before attempting merge.
         if b.length >= 2
           if b[0] == "or" and b[1][0] == "or" or b[1][0] == "and"
             # We are merging both rules and pinned nodes
