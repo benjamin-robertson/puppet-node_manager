@@ -72,9 +72,9 @@ Puppet::Type.newtype(:node_group) do
           puts merged
           if merged == b
             puts "values are the same, returning orginal value"
-            b
+            super(b)
           else
-            merged
+            super(merged)
           end
         else
           a
