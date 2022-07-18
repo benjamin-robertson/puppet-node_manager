@@ -76,6 +76,10 @@ Puppet::Type.newtype(:node_group) do
             puts "I should never run"
             fail("Didn't match expected rule set")
           end
+          puts "b is now"
+          puts b
+          puts "merged is now"
+          puts merged
           if merged == b
             # values are the same, returning orginal value"
             puts "values were the same"
