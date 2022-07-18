@@ -96,6 +96,9 @@ Puppet::Type.newtype(:node_group) do
         end
       end
     end
+    puts "should is gonna be"
+    puts should.class
+    puts should
     def insync?(is)
       puts "is equals"
       puts is.class
