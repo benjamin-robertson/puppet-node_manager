@@ -45,7 +45,7 @@ Puppet::Type.newtype(:node_group) do
       else
         a = shouldorig
         b = @resource.property(:rule).retrieve || {}
-        borig = b
+        borig = b.map(&:clone)
         puts "set is"
         puts a
         puts "node group is borig"
@@ -83,7 +83,7 @@ Puppet::Type.newtype(:node_group) do
           if merged == borig
             # values are the same, returning orginal value"
             puts "values were the same"
-            merged
+            borig
           else
             merged
           end
