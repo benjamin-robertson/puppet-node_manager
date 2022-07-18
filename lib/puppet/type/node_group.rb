@@ -48,8 +48,8 @@ Puppet::Type.newtype(:node_group) do
         borig = b
         puts "set is"
         puts a
-        puts "node group is"
-        puts b
+        puts "node group is borig"
+        puts borig
         # check if the node classifer has any rules defined before attempting merge.
         if b.length >= 2
           if b[0] == "or" and b[1][0] == "or" or b[1][0] == "and"
@@ -76,7 +76,7 @@ Puppet::Type.newtype(:node_group) do
             puts "I should never run"
             fail("Didn't match expected rule set")
           end
-          puts "b is now"
+          puts "borig is now"
           puts borig
           puts "merged is now"
           puts merged
