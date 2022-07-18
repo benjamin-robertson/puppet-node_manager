@@ -77,13 +77,13 @@ Puppet::Type.newtype(:node_group) do
             fail("Didn't match expected rule set")
           end
           puts "b is now"
-          puts b
+          puts @resource.property(:rule).retrieve || {}
           puts "merged is now"
           puts merged
-          if merged == b
+          if merged == @resource.property(:rule).retrieve || {}
             # values are the same, returning orginal value"
             puts "values were the same"
-            b
+            @resource.property(:rule).retrieve || {}
           else
             merged
           end
