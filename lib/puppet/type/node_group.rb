@@ -101,8 +101,8 @@ Puppet::Type.newtype(:node_group) do
       # puts is.class
       # puts "should equals"
       # puts should.class
-      #is == should
-      property_matches?(is,should)
+      is.sort == should
+      #property_matches?(is,should)
     end
   end
   newproperty(:environment) do
