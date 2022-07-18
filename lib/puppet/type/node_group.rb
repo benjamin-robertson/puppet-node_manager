@@ -88,6 +88,7 @@ Puppet::Type.newtype(:node_group) do
             puts "values were the same"
             borig
           else
+            puts "value not the same - return merged"
             merged
           end
         else
