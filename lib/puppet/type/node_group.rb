@@ -78,8 +78,10 @@ Puppet::Type.newtype(:node_group) do
           end
           puts "borig is now"
           puts borig.object_id
+          puts borig
           puts "merged is now"
           puts merged.object_id
+          puts merged
           if merged == borig
             # values are the same, returning orginal value"
             puts "values were the same"
