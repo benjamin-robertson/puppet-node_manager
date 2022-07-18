@@ -99,7 +99,6 @@ Puppet::Type.newtype(:node_group) do
       puts should
       #is == should
       property_matches?(is,should)
-      false
     end
   end
   newproperty(:environment) do
