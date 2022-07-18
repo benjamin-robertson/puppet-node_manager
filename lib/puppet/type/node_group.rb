@@ -95,7 +95,7 @@ Puppet::Type.newtype(:node_group) do
     def insync?(is)
       is == should
     end
-    puts match_all?
+    puts match_all
   end
   newproperty(:environment) do
     desc 'Environment for this group'
