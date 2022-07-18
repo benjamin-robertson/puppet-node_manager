@@ -96,14 +96,14 @@ Puppet::Type.newtype(:node_group) do
         end
       end
     end
-    # def insync?(is)
-    #   # puts "is equals"
-    #   # puts is.class
-    #   # puts "should equals"
-    #   # puts should.class
-    #   is.sort == should
-    #   #property_matches?(is,should)
-    # end
+    def insync?(is)
+      # puts "is equals"
+      # puts is.class
+      # puts "should equals"
+      # puts should.class
+      is.sort == should.sort
+      #property_matches?(is,should)
+    end
   end
   newproperty(:environment) do
     desc 'Environment for this group'
