@@ -72,13 +72,14 @@ Puppet::Type.newtype(:node_group) do
             puts "Merged value is - rules or pinned"
             puts merged
           end
-          if merged == b
-            # values are the same, returning orginal value"
-            puts "values were the same"
-            b
-          else
-            merged
-          end
+          # if merged == b
+          #   # values are the same, returning orginal value"
+          #   puts "values were the same"
+          #   b
+          # else
+          #   merged
+          # end
+          merged
         else
           a
         end
