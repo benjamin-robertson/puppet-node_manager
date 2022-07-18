@@ -92,11 +92,8 @@ Puppet::Type.newtype(:node_group) do
         end
       end
     end
-    if shouldorig == @resource.property(:rule).retrieve || {}
-      puts "shouldorig and resource match"
-      def insync?(is)
-        is == should
-      end
+    def insync?(is)
+      is == should
     end
     puts match_all?
   end
