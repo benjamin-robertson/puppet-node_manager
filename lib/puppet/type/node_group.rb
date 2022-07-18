@@ -83,7 +83,7 @@ Puppet::Type.newtype(:node_group) do
           if merged == borig
             # values are the same, returning orginal value"
             puts "values were the same"
-            borig
+            merged
           else
             merged
           end
