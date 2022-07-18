@@ -37,7 +37,7 @@ Puppet::Type.newtype(:node_group) do
     desc 'Match conditions for this group'
     #defaultto []
     def should
-      puts "merge is"
+      puts "purge behavior"
       puts @resource[:purge_behavior]
       case @resource[:purge_behavior]
       when :rule, :all
@@ -57,17 +57,24 @@ Puppet::Type.newtype(:node_group) do
             pinned = (a[2,a.length] + b[2,b.length]).uniq
             b[1] = rules
             merged = (b + pinned).uniq
+            puts "Merged value is - both rules and pinned"
+            puts merged
           elsif a[0] == "or" and a[1][0] == "or" or a[1][0] == "and"
             # We are merging both rules and pinned nodes
             rules = a[1] # no rules to merge on B side
             pinned = (a[2,a.length] + b[2,b.length]).uniq
             merged = (a + pinned).uniq
+            puts "Merged value is - no rules on b side"
+            puts merged
           else
             # We are only doing rules OR pinned nodes
             merged = (a + b.drop(1)).uniq
+            puts "Merged value is - rules or pinned"
+            puts merged
           end
           if merged == b
             # values are the same, returning orginal value"
+            puts "values were the same"
             b
           else
             merged
