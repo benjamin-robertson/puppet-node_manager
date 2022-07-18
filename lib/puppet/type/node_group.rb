@@ -94,9 +94,9 @@ Puppet::Type.newtype(:node_group) do
     end
     def insync?(is)
       puts "is equals"
-      puts is
+      puts is.class
       puts "should equals"
-      puts should
+      puts should.class
       #is == should
       property_matches?(is,should)
     end
