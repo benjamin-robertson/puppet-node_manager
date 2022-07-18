@@ -49,6 +49,7 @@ Puppet::Type.newtype(:node_group) do
         puts "set is"
         puts a
         puts "node group is borig"
+        puts borig.object_id
         puts borig
         # check if the node classifer has any rules defined before attempting merge.
         if b.length >= 2
