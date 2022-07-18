@@ -98,6 +98,7 @@ Puppet::Type.newtype(:node_group) do
         is == should
       end
     end
+    puts match_all?
   end
   newproperty(:environment) do
     desc 'Environment for this group'
