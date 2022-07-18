@@ -80,7 +80,37 @@ Puppet::Type.newtype(:node_group) do
       puts is
       puts "should is"
       puts should
+      b = is
+      a = should
       #property_matches?(is,should)
+      if b.length >= 2
+        if b[0] == "or" and b[1][0] == "or" or b[1][0] == "and"
+          # We are merging both rules and pinned nodes
+          rules = (b[1] + a[1].drop(1)).uniq
+          pinned = (a[2,a.length] + b[2,b.length]).uniq
+          b[1] = rules
+          merged = (b + pinned).uniq
+        elsif b[0] == "and" or b[0] == "or"
+          # We are only doing rules OR pinned nodes
+          merged = (a + b.drop(1)).uniq
+        elsif a[0] == "or" and a[1][0] == "or" or a[1][0] == "and"
+          # No rules to merge on B side
+          rules = a[1] # no rules to merge on B side
+          pinned = (a[2,a.length] + b[2,b.length]).uniq
+          merged = (a + pinned).uniq
+        else
+          puts "I should never run"
+          fail("Didn't match expected rule set")
+        end
+        if merged == borig
+          # values are the same, returning orginal value"
+          borig
+        else
+          merged
+        end
+      end
+      should = merged
+      is == merged
     end
   end
   newproperty(:environment) do
