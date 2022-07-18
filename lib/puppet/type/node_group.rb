@@ -59,18 +59,20 @@ Puppet::Type.newtype(:node_group) do
             merged = (b + pinned).uniq
             puts "Merged value is - both rules and pinned"
             puts merged
+          elsif b[0] == "and" or b[0] == "or"
+            # We are only doing rules OR pinned nodes
+            merged = (a + b.drop(1)).uniq
+            puts "Merged value is - rules or pinned"
+            puts merged
           elsif a[0] == "or" and a[1][0] == "or" or a[1][0] == "and"
-            # We are merging both rules and pinned nodes
+            # No rules to merge on B side
             rules = a[1] # no rules to merge on B side
             pinned = (a[2,a.length] + b[2,b.length]).uniq
             merged = (a + pinned).uniq
             puts "Merged value is - no rules on b side"
             puts merged
           else
-            # We are only doing rules OR pinned nodes
-            merged = (a + b.drop(1)).uniq
-            puts "Merged value is - rules or pinned"
-            puts merged
+            puts "I should never run"
           end
           # if merged == b
           #   # values are the same, returning orginal value"
