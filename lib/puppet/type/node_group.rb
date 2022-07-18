@@ -45,6 +45,7 @@ Puppet::Type.newtype(:node_group) do
       else
         a = shouldorig
         b = @resource.property(:rule).retrieve || {}
+        borig = b
         puts "set is"
         puts a
         puts "node group is"
@@ -53,11 +54,10 @@ Puppet::Type.newtype(:node_group) do
         if b.length >= 2
           if b[0] == "or" and b[1][0] == "or" or b[1][0] == "and"
             # We are merging both rules and pinned nodes
-            btmp = b
-            rules = (btmp[1] + a[1].drop(1)).uniq
-            pinned = (a[2,a.length] + btmp[2,btmp.length]).uniq
-            btmp[1] = rules
-            merged = (btmp + pinned).uniq
+            rules = (b[1] + a[1].drop(1)).uniq
+            pinned = (a[2,a.length] + b[2,b.length]).uniq
+            b[1] = rules
+            merged = (b + pinned).uniq
             puts "Merged value is - both rules and pinned"
             puts merged
           elsif b[0] == "and" or b[0] == "or"
@@ -77,13 +77,13 @@ Puppet::Type.newtype(:node_group) do
             fail("Didn't match expected rule set")
           end
           puts "b is now"
-          puts @resource.property(:rule).retrieve || {}
+          puts borig
           puts "merged is now"
           puts merged
-          if merged == @resource.property(:rule).retrieve || {}
+          if merged == borig
             # values are the same, returning orginal value"
             puts "values were the same"
-            @resource.property(:rule).retrieve || {}
+            borig
           else
             merged
           end
