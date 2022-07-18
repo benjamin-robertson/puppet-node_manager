@@ -35,7 +35,7 @@ Puppet::Type.newtype(:node_group) do
   end
   newproperty(:rule, :array_matching => :all) do
     desc 'Match conditions for this group'
-    defaultto []
+    #defaultto []
     def should
       puts "merge is"
       puts @resource[:purge_behavior]
