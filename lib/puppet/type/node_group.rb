@@ -36,13 +36,10 @@ Puppet::Type.newtype(:node_group) do
   newproperty(:rule, :array_matching => :all) do
     desc 'Match conditions for this group'
     #defaultto []
-    if shouldorig == @resource.property(:rule).retrieve || {}
-      puts "shouldorig and resource match"
-      def insync?(is)
-        is == should
-      end
-    end
     def should
+      if shouldorig == @resource.property(:rule).retrieve || {}
+        puts "shouldorig and resource match"
+      end
       puts "purge behavior"
       puts @resource[:purge_behavior]
       case @resource[:purge_behavior]
@@ -97,6 +94,9 @@ Puppet::Type.newtype(:node_group) do
           a
         end
       end
+    end
+    def insync?(is)
+      is == should
     end
   end
   newproperty(:environment) do
