@@ -93,9 +93,12 @@ Puppet::Type.newtype(:node_group) do
       end
     end
     def insync?(is)
+      puts "is equals"
+      puts is
+      puts "should equals"
+      puts should
       is == should
     end
-    puts match_all
   end
   newproperty(:environment) do
     desc 'Environment for this group'
