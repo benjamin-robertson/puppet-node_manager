@@ -119,8 +119,10 @@ Puppet::Type.newtype(:node_group) do
           end
           if merged == borig
             # values are the same, returning orginal value"
+            puts "original #{borig}"
             borig
           else
+            puts "merged value #{merged}"
             merged
           end
         else
