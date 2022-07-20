@@ -116,7 +116,7 @@ Puppet::Type.newtype(:node_group) do
             else
               # a only has rules
               temp = ['or']
-              temp = temp + a
+              temp[1] = a
               puts "temp is #{temp}"
               puts "btmp is #{btmp}"
               puts "btmp is #{btmp[1,btmp.length]}"
