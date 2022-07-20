@@ -76,6 +76,8 @@ Puppet::Type.newtype(:node_group) do
             elsif a[0] == "and" or a[0] == "or" and factcheck(a)
               # a only has rules to merge
               puts "a only has rules to merge"
+              puts "a is #{a}"
+              puts "btmp is #{btmp}"
               rules = (btmp[1] + a[1].drop(1)).uniq
               btmp[1] = rules
               merged = btmp
