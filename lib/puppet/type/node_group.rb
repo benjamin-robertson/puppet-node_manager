@@ -93,7 +93,7 @@ Puppet::Type.newtype(:node_group) do
               temp = ['or']
               temp[1] = btmp
               puts "temp are #{temp}"
-              merged = (temp + a[1,a.length] )
+              merged = (temp + a[1,a.length]).uniq
               puts "merged are #{merged}"
             else
               # a only has rules
