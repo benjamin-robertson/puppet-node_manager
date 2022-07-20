@@ -36,6 +36,20 @@ Puppet::Type.newtype(:node_group) do
   newproperty(:rule, :array_matching => :all) do
     desc 'Match conditions for this group'
     #defaultto []
+    # check for fact rule in deep array
+    def factcheck(rulecheck)
+      rulecheck.each_with_index {|x, i|
+        if x == "fact" and i == 0
+          return true
+        end
+        if x.kind_of?(Array)
+          if factcheck(x)
+            return true
+          end
+        end
+      }
+      false
+    end
     def should
       case @resource[:purge_behavior]
       when :rule, :all
@@ -45,10 +59,10 @@ Puppet::Type.newtype(:node_group) do
         b = @resource.property(:rule).retrieve || {}
         borig = b.map(&:clone)
         btmp = b.map(&:clone)
-        puts "first a is"
-        puts a
-        puts "first b is"
-        puts b
+        # puts "first a is"
+        # puts a
+        # puts "first b is"
+        # puts b
         # check if the node classifer has any rules defined before attempting merge.
         if b.length >= 2
           if b[0] == "or" and b[1][0] == "or" or b[1][0] == "and"
@@ -67,6 +81,22 @@ Puppet::Type.newtype(:node_group) do
             rules = a[1] # no rules to merge on B side
             pinned = (a[2,a.length] + b[1,b.length]).uniq
             merged = (a + pinned).uniq
+          # check if b is only fact rules
+          elsif b[0] == "and" or b[0] == "or" and factcheck(b)
+            # check if a has pinned nodes only
+            puts "b only has fact rules"
+            if a[0] == "or" and not factcheck(a)
+              puts "a only has pinned nodes"
+              # a only has pinned nodes
+              rules = btmp
+              temp = ['or']
+              temp[1] = btmp
+              merged = (btmp + a[1,a.length] )
+            else
+              # a only has rules
+              puts "a only has rules"
+              merged = (a + b.drop(1)).uniq
+            end
           else
             # We are only doing rules OR pinned nodes
             merged = (a + b.drop(1)).uniq
