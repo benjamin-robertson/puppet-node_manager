@@ -89,9 +89,12 @@ Puppet::Type.newtype(:node_group) do
               puts "a only has pinned nodes"
               # a only has pinned nodes
               rules = btmp
+              puts "rules are #{rules}"
               temp = ['or']
               temp[1] = btmp
+              puts "temp are #{temp}"
               merged = (btmp + a[1,a.length] )
+              puts "merged are #{merged}"
             else
               # a only has rules
               puts "a only has rules"
