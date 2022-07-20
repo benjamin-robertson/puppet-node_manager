@@ -51,10 +51,10 @@ Puppet::Type.newtype(:node_group) do
             # We are merging both rules and pinned nodes
             puts "b was"
             puts b
-            rules = (b[1] + a[1].drop(1)).uniq
+            rules = (btmp[1] + a[1].drop(1)).uniq
             puts "rules is"
             puts rules
-            pinned = (a[2,a.length] + b[2,b.length]).uniq
+            pinned = (a[2,a.length] + btmp[2,btmp.length]).uniq
             puts "pinned is"
             puts pinned
             btmp[1] = rules
