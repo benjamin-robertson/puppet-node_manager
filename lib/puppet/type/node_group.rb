@@ -45,6 +45,10 @@ Puppet::Type.newtype(:node_group) do
         b = @resource.property(:rule).retrieve || {}
         borig = b.map(&:clone)
         btmp = b.map(&:clone)
+        puts "first a is"
+        puts a
+        puts "first b is"
+        puts b
         # check if the node classifer has any rules defined before attempting merge.
         if b.length >= 2
           if b[0] == "or" and b[1][0] == "or" or b[1][0] == "and"
@@ -59,8 +63,8 @@ Puppet::Type.newtype(:node_group) do
               puts "pinned is"
               puts pinned
             end
-              puts "btmp is"
-              puts btmp
+            puts "btmp is"
+            puts btmp
             merged = (btmp + pinned).uniq
           elsif a[0] == "or" and a[1][0] == "or" or a[1][0] == "and"
             # We are merging both rules and pinned nodes
