@@ -36,81 +36,49 @@ Puppet::Type.newtype(:node_group) do
   newproperty(:rule, :array_matching => :all) do
     desc 'Match conditions for this group'
     #defaultto []
-    # def should
-    #   case @resource[:purge_behavior]
-    #   when :rule, :all
-    #     super
-    #   else
-    #     a = shouldorig
-    #     b = @resource.property(:rule).retrieve || {}
-    #     borig = b.map(&:clone)
-    #     # check if the node classifer has any rules defined before attempting merge.
-    #     if b.length >= 2
-    #       if b[0] == "or" and b[1][0] == "or" or b[1][0] == "and"
-    #         # We are merging both rules and pinned nodes
-    #         rules = (b[1] + a[1].drop(1)).uniq
-    #         pinned = (a[2,a.length] + b[2,b.length]).uniq
-    #         b[1] = rules
-    #         merged = (b + pinned).uniq
-    #       elsif b[0] == "and" or b[0] == "or"
-    #         # We are only doing rules OR pinned nodes
-    #         merged = (a + b.drop(1)).uniq
-    #       elsif a[0] == "or" and a[1][0] == "or" or a[1][0] == "and"
-    #         # No rules to merge on B side
-    #         rules = a[1] # no rules to merge on B side
-    #         pinned = (a[2,a.length] + b[2,b.length]).uniq
-    #         merged = (a + pinned).uniq
-    #       else
-    #         puts "I should never run"
-    #         fail("Didn't match expected rule set")
-    #       end
-    #       if merged == borig
-    #         # values are the same, returning orginal value"
-    #         borig
-    #       else
-    #         merged
-    #       end
-    #     else
-    #       a
-    #     end
-    #   end
-    # end
-    def insync?(is)
-      puts "is is"
-      puts is
-      puts "should is"
-      puts should
-      b = is
-      a = should
-      #property_matches?(is,should)
-      if b.length >= 2
-        if b[0] == "or" and b[1][0] == "or" or b[1][0] == "and"
-          # We are merging both rules and pinned nodes
-          rules = (b[1] + a[1].drop(1)).uniq
-          pinned = (a[2,a.length] + b[2,b.length]).uniq
-          b[1] = rules
-          merged = (b + pinned).uniq
-        elsif b[0] == "and" or b[0] == "or"
-          # We are only doing rules OR pinned nodes
-          merged = (a + b.drop(1)).uniq
-        elsif a[0] == "or" and a[1][0] == "or" or a[1][0] == "and"
-          # No rules to merge on B side
-          rules = a[1] # no rules to merge on B side
-          pinned = (a[2,a.length] + b[2,b.length]).uniq
-          merged = (a + pinned).uniq
+    def should
+      puts "merge is"
+      puts @resource[:purge_behavior]
+      case @resource[:purge_behavior]
+      when :rule, :all
+        super
+      else
+        a = shouldorig
+        b = @resource.property(:rule).retrieve || {}
+        puts "set is"
+        puts a
+        puts "node group is"
+        puts b
+        # check if the node classifer has any rules defined before attempting merge.
+        if b.length >= 2
+          if b[0] == "or" and b[1][0] == "or" or b[1][0] == "and"
+            # We are merging both rules and pinned nodes
+            rules = (b[1] + a[1].drop(1)).uniq
+            pinned = (a[2,a.length] + b[2,b.length]).uniq
+            b[1] = rules
+            merged = (b + pinned).uniq
+          elsif a[0] == "or" and a[1][0] == "or" or a[1][0] == "and"
+            # We are merging both rules and pinned nodes
+            rules = a[1] # no rules to merge on B side
+            pinned = (a[2,a.length] + b[2,b.length]).uniq
+            merged = (a + pinned).uniq
+          else
+            # We are only doing rules OR pinned nodes
+            merged = (a + b.drop(1)).uniq
+          end
+          if merged == b
+            # values are the same, returning orginal value"
+            b
+          else
+            merged
+          end
         else
-          puts "I should never run"
-          fail("Didn't match expected rule set")
-        end
-        if merged == borig
-          # values are the same, returning orginal value"
-          borig
-        else
-          merged
+          a
         end
       end
-      should = merged
-      is == merged
+    end
+    def insync?(is)
+      is == should
     end
   end
   newproperty(:environment) do
