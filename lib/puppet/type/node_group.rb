@@ -118,7 +118,7 @@ Puppet::Type.newtype(:node_group) do
               temp = ['or']
               temp = temp + a
               puts "temp is #{temp}"
-              merged = (temp + btmp[1.btemp.length]).uniq
+              merged = (temp + btmp[1.btmp.length]).uniq
               puts "merged is #{temp}"
             end
           else
