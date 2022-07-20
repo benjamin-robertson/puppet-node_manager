@@ -37,18 +37,13 @@ Puppet::Type.newtype(:node_group) do
     desc 'Match conditions for this group'
     #defaultto []
     def should
-      puts "merge is"
-      puts @resource[:purge_behavior]
       case @resource[:purge_behavior]
       when :rule, :all
         super
       else
         a = shouldorig
         b = @resource.property(:rule).retrieve || {}
-        puts "set is"
-        puts a
-        puts "node group is"
-        puts b
+        borig = b.map(&:clone)
         # check if the node classifer has any rules defined before attempting merge.
         if b.length >= 2
           if b[0] == "or" and b[1][0] == "or" or b[1][0] == "and"
@@ -66,9 +61,9 @@ Puppet::Type.newtype(:node_group) do
             # We are only doing rules OR pinned nodes
             merged = (a + b.drop(1)).uniq
           end
-          if merged == b
+          if merged == borig
             # values are the same, returning orginal value"
-            b
+            borig
           else
             merged
           end
