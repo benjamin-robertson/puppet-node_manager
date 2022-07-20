@@ -78,7 +78,7 @@ Puppet::Type.newtype(:node_group) do
               puts "a only has rules to merge"
               puts "a is #{a}"
               puts "btmp is #{btmp}"
-              rules = (btmp[1] + a[1].drop(1)).uniq
+              rules = (btmp[1] + a[1]).uniq
               btmp[1] = rules
               merged = btmp
             else
