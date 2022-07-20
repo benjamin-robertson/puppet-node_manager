@@ -102,7 +102,7 @@ Puppet::Type.newtype(:node_group) do
             else
               # a only has rules
               puts "a only has rules"
-              merged = (a + b.drop(1)).uniq
+              merged = (b + a.drop(1)).uniq
             end
           elsif b[0] == "or" and b[1][1] == "name"
             # b only has pinned nodes
