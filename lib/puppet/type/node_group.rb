@@ -53,9 +53,10 @@ Puppet::Type.newtype(:node_group) do
               # a has rules to merge
               rules = (btmp[1] + a[1].drop(1)).uniq
               btmp[1] = rules
+              pinned = (a[2,a.length] + btmp[2,btmp.length]).uniq
+            else
+              pinned = (a[1,a.length] + btmp[2,btmp.length]).uniq
             end
-            pinned = (a[2,a.length] + btmp[2,btmp.length]).uniq
-            
             merged = (btmp + pinned).uniq
           elsif a[0] == "or" and a[1][0] == "or" or a[1][0] == "and"
             # We are merging both rules and pinned nodes
