@@ -96,12 +96,9 @@ Puppet::Type.newtype(:node_group) do
               puts "a only has pinned nodes"
               # a only has pinned nodes
               rules = btmp
-              puts "rules are #{rules}"
               temp = ['or']
               temp[1] = btmp
-              puts "temp are #{temp}"
               merged = (temp + a[1,a.length]).uniq
-              puts "merged are #{merged}"
             else
               # a only has rules
               puts "a only has rules"
@@ -117,11 +114,7 @@ Puppet::Type.newtype(:node_group) do
               # a only has rules
               temp = ['or']
               temp[1] = a
-              puts "temp is #{temp}"
-              puts "btmp is #{btmp}"
-              puts "btmp is #{btmp[1,btmp.length]}"
               merged = (temp + btmp[1,btmp.length]).uniq
-              puts "merged is #{merged}"
             end
           else
             # We are only doing rules OR pinned nodes
