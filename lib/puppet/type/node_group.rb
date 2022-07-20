@@ -89,9 +89,8 @@ Puppet::Type.newtype(:node_group) do
             rules = a[1] # no rules to merge on B side
             pinned = (a[2,a.length] + b[1,b.length]).uniq
             merged = (a + pinned).uniq
-          # check if b is only fact rules
           elsif b[0] == "and" or b[0] == "or" and factcheck(b)
-            # check if a has pinned nodes only
+            # b only has fact rules
             puts "b only has fact rules"
             if a[0] == "or" and not factcheck(a)
               puts "a only has pinned nodes"
@@ -108,9 +107,22 @@ Puppet::Type.newtype(:node_group) do
               puts "a only has rules"
               merged = (a + b.drop(1)).uniq
             end
+          elsif b[0] == "or" and b[0][1] == "name"
+            # b only has pinned nodes
+            puts "b only has pinned nodes"
+            if a[0] == "or" and not factcheck(a)
+              # a only has pinned nodes
+              merged = (a + b.drop(1)).uniq
+            else
+              # a only has rules
+              temp = ['or']
+              temp = temp + a
+              puts "temp is #{temp}"
+              merged = (temp + btmp[1.btemp.length]).uniq
+              puts "merged is #{temp}"
           else
             # We are only doing rules OR pinned nodes
-            puts "default rule"
+            puts "default rule - might fail"
             merged = (a + b.drop(1)).uniq
           end
           if merged == borig
