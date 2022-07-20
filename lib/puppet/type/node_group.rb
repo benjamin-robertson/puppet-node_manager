@@ -48,6 +48,8 @@ Puppet::Type.newtype(:node_group) do
         if b.length >= 2
           if b[0] == "or" and b[1][0] == "or" or b[1][0] == "and"
             # We are merging both rules and pinned nodes
+            puts "b was"
+            puts b
             rules = (b[1] + a[1].drop(1)).uniq
             puts "rules is"
             puts rules
