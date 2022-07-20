@@ -76,13 +76,8 @@ Puppet::Type.newtype(:node_group) do
               merged = (btmp + pinned).uniq
             elsif a[0] == "and" or a[0] == "or" and factcheck(a)
               # a only has rules to merge
-              puts "a only has rules to merge"
-              puts "a is #{a}"
-              puts "btmp is #{btmp}"
               rules = (btmp[1] + a.drop(1)).uniq
-              puts "rules is #{rules}"
               btmp[1] = rules
-              puts "btmp is now #{btmp}"
               merged = btmp
             else
               pinned = (a[1,a.length] + btmp[2,btmp.length]).uniq
@@ -120,10 +115,8 @@ Puppet::Type.newtype(:node_group) do
           end
           if merged == borig
             # values are the same, returning orginal value"
-            puts "original #{borig}"
             borig
           else
-            puts "merged value #{merged}"
             merged
           end
         else
