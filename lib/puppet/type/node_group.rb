@@ -79,7 +79,9 @@ Puppet::Type.newtype(:node_group) do
               puts "a is #{a}"
               puts "btmp is #{btmp}"
               rules = (btmp[1] + a[1]).uniq
+              puts "rules is #{rules}"
               btmp[1] = rules
+              puts "btmp is now #{btmp}"
               merged = btmp
             else
               pinned = (a[1,a.length] + btmp[2,btmp.length]).uniq
