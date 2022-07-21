@@ -92,8 +92,7 @@ Puppet::Type.newtype(:node_group) do
               merged = (temp + atmp[1,atmp.length]).uniq
             end
           else
-            # default fall back. This should not be hit
-            Puppet.warning("default rule - might fail - Pullout before PR to main project")
+            # default fall back.
             merged = (b + a.drop(1)).uniq
           end
           if merged == aorig
