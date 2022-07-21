@@ -47,7 +47,7 @@ Puppet::Type.newtype(:node_group) do
         # check if the node classifer has any rules defined before attempting merge.
         if a.length >= 2
           if a[0] == "or" and a[1][0] == "or" or a[1][0] == "and"
-            # We are merging both rules and pinned nodes
+            # Merging both rules and pinned nodes
             if b[0] == "or" and b[1][0] == "or" or b[1][0] == "and"
               # b has rules to merge
               rules = (atmp[1] + b[1].drop(1)).uniq
@@ -64,7 +64,7 @@ Puppet::Type.newtype(:node_group) do
               merged = (atmp + pinned).uniq
             end
           elsif b[0] == "or" and b[1][0] == "or" or b[1][0] == "and"
-            # We are merging both rules and pinned nodes
+            # Merging both rules and pinned nodes
             rules = b[1] # no rules to merge on a side
             pinned = (b[2,b.length] + a[1,a.length]).uniq
             merged = (b + pinned).uniq
